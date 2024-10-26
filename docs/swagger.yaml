@@ -1,0 +1,144 @@
+definitions:
+  inventory.MessageType:
+    properties:
+      message:
+        type: string
+    type: object
+  inventory.Product:
+    properties:
+      category:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /product/add:
+    post:
+      consumes:
+      - application/json
+      description: Add a new product to the inventory
+      parameters:
+      - description: Product object
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.Product'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/inventory.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+      summary: Add a new product
+      tags:
+      - inventory
+  /product/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete product from the inventory by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+      summary: Delete a product by ID
+      tags:
+      - inventory
+  /product/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get product details by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inventory.Product'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+      summary: Get a product by ID
+      tags:
+      - inventory
+  /product/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update product details by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated product object
+        in: body
+        name: updatedProduct
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inventory.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inventory.MessageType'
+      summary: Update a product by ID
+      tags:
+      - inventory
+swagger: "2.0"
